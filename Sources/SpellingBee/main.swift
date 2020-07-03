@@ -9,7 +9,19 @@ struct SpellingBee : ParsableCommand {
     init(from decoder: Decoder) throws { }
 
     mutating func run() throws {
-        
+        guard let list = WordList() else {
+            print("Failed to load word list")
+            return
+        }
+        print("Loaded word list! Has \(list.words.count) words")
+
+        let testWords = ["Hello", "alfalfa", "took", "szn", "tuned", "alksdjf", "123213", "Disney"]
+        print("Testing word list with some words")
+        testWords.forEach { (word) in
+            print("Testing \(word)")
+            let isWord = list.isWord(word)
+            print("\(word) \(isWord ? "is" : "is not") a word")
+        }
     }
 
 }
@@ -25,9 +37,6 @@ struct Generate : ParsableCommand {
     private var verbose: Bool = false
     
     func run() throws {
-        if verbose {
-            print("Hell world")
-        }
     }
 }
 
