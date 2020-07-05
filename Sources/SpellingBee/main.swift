@@ -1,4 +1,5 @@
 import ArgumentParser
+import SpellingBeeLib
 
 struct SpellingBee : ParsableCommand {
     static let configuration = CommandConfiguration(

@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct WordList {
+public struct WordList {
     
-    var words: [String]
+    public var words: [String]
     var hashed: Set<String>
     
-    init?() {
+    public init?() {
         do {
             let wordString = try String(contentsOfFile: "/Users/JeremyYL/Developer/SpellingBee/Sources/SpellingBee/words.txt", encoding: String.Encoding.utf8)
             let splitWords = wordString.split(whereSeparator: \.isNewline)
@@ -25,7 +25,7 @@ struct WordList {
         }
     }
     
-    func isWord(_ word: String) -> Bool {
+    public func isWord(_ word: String) -> Bool {
         return hashed.contains(word.lowercased())
     }
 }
