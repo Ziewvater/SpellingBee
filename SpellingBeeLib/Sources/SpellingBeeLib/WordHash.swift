@@ -26,4 +26,8 @@ public struct WordHash {
             }
         }
     }
+    
+    func words(for key: String) -> [String]? {
+        return record[key]
+    }
 }
