@@ -27,8 +27,15 @@ public struct Solver {
     }
     
     public func solve(for letters: [String]) -> [String] {
-        let combinations = Generator.combinations(of: letters)
-        return combinations.compactMap { (combo) -> [String]? in
+        return Generator.combinations(of: letters).compactMap { (combo) -> [String]? in
+            return wordHash.words(for: combo)
+        }.reduce([], +)
+    }
+    
+    public func solve(for letters: [String], withKeyLetter keyLetter: String) -> [String] {
+        return Generator.combinations(of: letters).filter {
+            return $0.contains(keyLetter)
+        }.compactMap { (combo) -> [String]? in
             return wordHash.words(for: combo)
         }.reduce([], +)
     }
