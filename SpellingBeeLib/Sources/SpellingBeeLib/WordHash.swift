@@ -28,6 +28,7 @@ public struct WordHash {
     }
     
     func words(for key: String) -> [String]? {
-        return record[key]
+        let sortedKey = String(key.sorted())
+        return record[sortedKey]
     }
 }

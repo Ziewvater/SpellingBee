@@ -11,7 +11,7 @@ public struct Solver {
     
     private let wordHash: WordHash
     
-    init?(wordList: [String]? = nil) {
+    public init?(wordList: [String]? = nil) {
         guard let list: [String] = {
             if let wordList = wordList {
                 return wordList
