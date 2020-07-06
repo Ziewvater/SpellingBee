@@ -11,6 +11,8 @@ import XCTest
 
 final class GeneratorTests: XCTestCase {
     
+    //MARK: Combinations by length
+    
     func testLengthOfOneGeneration() {
         let input = (1...3).map { String($0) }
         let combos = Generator.combinations(of: input, ofLength: 1)
@@ -35,4 +37,21 @@ final class GeneratorTests: XCTestCase {
         let combos = Generator.combinations(of: input, ofLength: 3)
         XCTAssertEqual(combos, ["123"])
     }
+    
+    //MARK: Comprehensive Combinations
+    
+    func testFullCombinationGeneration() {
+        let input = (1...3).map { String($0) }
+        let combos = Generator.combinations(of: input).sorted()
+        let expected = ["1", "2", "3", "12", "13", "23", "123"].sorted()
+        XCTAssertEqual(combos, expected)
+    }
+    
+    static var allTests = [
+        ("testLengthOfOneGeneration", testLengthOfOneGeneration),
+        ("testTwoLengthGeneration", testTwoLengthGeneration),
+        ("testThreeLengthGeneration", testThreeLengthGeneration),
+        ("testEqualInputAndOutputLengthGeneration", testEqualInputAndOutputLengthGeneration),
+        ("testFullCombinationGeneration", testFullCombinationGeneration),
+    ]
 }

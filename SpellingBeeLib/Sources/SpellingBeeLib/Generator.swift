@@ -9,6 +9,10 @@ import Foundation
 
 struct Generator {
     
+    static func combinations(of letters: [String]) -> [String] {
+        return (1...letters.count).map { combinations(of: letters, ofLength: $0) }.reduce([], +)
+    }
+    
     static func combinations(of letters: [String], withPrefix prefix: String? = nil, ofLength length: Int) -> [String] {
         
         if let prefix = prefix {
