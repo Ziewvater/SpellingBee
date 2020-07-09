@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// The WordHash creates a quick reference for words, keyed by the letters that are
+/// members of the word.
 public struct WordHash {
     
     var record: [String: [String]]

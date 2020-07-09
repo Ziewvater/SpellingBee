@@ -14,6 +14,7 @@ public struct WordList {
     
     public init?() {
         do {
+            // I should probably change this to be relative to the repository, huh
             let wordString = try String(contentsOfFile: "/Users/JeremyYL/Developer/SpellingBee/Sources/SpellingBee/words.txt", encoding: String.Encoding.utf8)
             let splitWords = wordString.split(whereSeparator: \.isNewline)
             self.words = splitWords.map { String($0).lowercased() }

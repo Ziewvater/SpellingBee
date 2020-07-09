@@ -7,12 +7,17 @@
 
 import Foundation
 
+/// The Generator finds all possible combinations for a set of letters
 struct Generator {
     
+    /// Creates combinations of the given letters, for all possible lengths
     static func combinations(of letters: [String]) -> [String] {
         return (1...letters.count).map { combinations(of: letters, ofLength: $0) }.reduce([], +)
     }
     
+    /// Creates combinations of the given letters for just the given length
+    /// A prefix for the combinations may be prepended. The prefix, if provided,
+    /// is not considered in the combinations generated
     static func combinations(of letters: [String], withPrefix prefix: String? = nil, ofLength length: Int) -> [String] {
         
         if let prefix = prefix {
