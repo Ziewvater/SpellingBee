@@ -18,8 +18,5 @@ let package = Package(
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "SpellingBeeLib", package: "SpellingBeeLib"),
         ]),
-        .testTarget(
-            name: "SpellingBeeTests",
-            dependencies: ["SpellingBee"]),
     ]
 )
