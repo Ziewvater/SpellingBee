@@ -13,11 +13,11 @@ public struct WordHash {
     
     var record: [String: [String]]
     
-    init(wordList: [String]) {
+    public init(wordList: [String]) {
         record = WordHash.createHash(with: wordList)
     }
     
-    static func createHash(with list: [String]) -> [String: [String]] {
+    private static func createHash(with list: [String]) -> [String: [String]] {
         return zip(list.map { Keymaker.key(for: $0) }, list).reduce(into: [:]) { (dict: inout [String: [String]], pair) in
             let (key, word) = pair
             if var entry = dict[key] {
@@ -29,7 +29,17 @@ public struct WordHash {
         }
     }
     
-    func words(for key: String) -> [String]? {
+    public func words(for key: String) -> [String]? {
         return record[Keymaker.key(for: key)]
+    }
+    
+    mutating func learn(word: String) {
+        let key = Keymaker.key(for: word)
+        if var entry = words(for: key) {
+            entry.append(word)
+            record[key] = entry
+        } else {
+            record[key] = [word]
+        }
     }
 }
