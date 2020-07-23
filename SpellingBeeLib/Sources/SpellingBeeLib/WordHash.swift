@@ -61,3 +61,11 @@ public struct WordHash {
         record[key] = edited
     }
 }
+
+extension WordHash {
+    
+    public func sourceWords() -> [String]? {
+        return record.compactMap { $0.value }.joined().map { $0 }.sorted()
+    }
+
+}

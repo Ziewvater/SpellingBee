@@ -104,6 +104,26 @@ final class WordHashTests: XCTestCase {
         XCTAssertFalse(hash.determineMembership(of: word))
     }
     
+    // MARK: Source Dumping
+    
+    func testSingleSource() {
+        let word = "cat"
+        let hash = WordHash(wordList: [word])
+        XCTAssertEqual(hash.sourceWords(), [word])
+    }
+    
+    func testDoubleSource() {
+        let words = ["cat", "barf"]
+        let hash = WordHash(wordList: words)
+        XCTAssertEqual(hash.sourceWords(), words.sorted())
+    }
+    
+    func testLongSource() {
+        let words = ["cat", "barf", "homely", "Computer", "plastic"]
+        let hash = WordHash(wordList: words)
+        XCTAssertEqual(hash.sourceWords(), words.sorted())
+    }
+    
     static var allTests = [
         ("testSingleWord", testSingleWord),
         ("testTwoWords", testTwoWords),
@@ -115,5 +135,8 @@ final class WordHashTests: XCTestCase {
         ("testDoubleLearning", testDoubleLearning),
         ("testSeparateDoubleLearning", testSeparateDoubleLearning),
         ("testForgettingWord", testForgettingWord),
+        ("testSingleSource", testSingleSource),
+        ("testDoubleSource", testDoubleSource),
+        ("testLongSource", testLongSource),
     ]
 }
