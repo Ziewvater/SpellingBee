@@ -43,6 +43,19 @@ final class WordHashTests: XCTestCase {
         XCTAssertEqual(hash.record, expected)
     }
     
+    func testMembership() {
+        let word = "cat"
+        let hash = WordHash(wordList: [word])
+        XCTAssertTrue(hash.determineMembership(of: word))
+    }
+    
+    func testNotMember() {
+        let word = "cat"
+        let notMember = "bag"
+        let hash = WordHash(wordList: [word])
+        XCTAssertFalse(hash.determineMembership(of: notMember))
+    }
+    
     // MARK: Learning
     
     func testSingleLearning() {
@@ -79,13 +92,28 @@ final class WordHashTests: XCTestCase {
         XCTAssertEqual(words, expected)
     }
     
+    // MARK: Forgetting
+    
+    func testForgettingWord() {
+        let word = "cat"
+        var hash = WordHash(wordList: [])
+        hash.learn(word: word)
+        XCTAssertTrue(hash.determineMembership(of: word))
+        
+        hash.forget(word: word)
+        XCTAssertFalse(hash.determineMembership(of: word))
+    }
+    
     static var allTests = [
         ("testSingleWord", testSingleWord),
         ("testTwoWords", testTwoWords),
         ("testTwoDifferentWords", testTwoDifferentWords),
         ("testTwoSetsOfDifferentWords", testTwoSetsOfDifferentWords),
+        ("testMembership", testMembership),
+        ("testNotMember", testNotMember),
         ("testSingleLearning", testSingleLearning),
         ("testDoubleLearning", testDoubleLearning),
         ("testSeparateDoubleLearning", testSeparateDoubleLearning),
+        ("testForgettingWord", testForgettingWord),
     ]
 }

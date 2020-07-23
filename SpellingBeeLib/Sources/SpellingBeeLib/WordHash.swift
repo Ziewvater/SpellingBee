@@ -29,17 +29,35 @@ public struct WordHash {
         }
     }
     
+    public func determineMembership(of word: String) -> Bool {
+        if let members = words(for: Keymaker.key(for: word)) {
+            return !members.isEmpty
+        } else {
+            return false
+        }
+    }
+    
     public func words(for key: String) -> [String]? {
         return record[Keymaker.key(for: key)]
     }
     
     mutating func learn(word: String) {
-        let key = Keymaker.key(for: word)
-        if var entry = words(for: key) {
-            entry.append(word)
-            record[key] = entry
-        } else {
-            record[key] = [word]
+        modifyRecord(for: word) { entry -> [String] in
+            return entry + [word]
         }
+
+    }
+    
+    mutating func forget(word: String) {
+        modifyRecord(for: word) { entry -> [String] in
+            return entry.filter { word != $0 }
+        }
+    }
+    
+    mutating private func modifyRecord(for word: String, with edit: (([String]) -> [String])) {
+        let key = Keymaker.key(for: word)
+        let entry = words(for: key) ?? []
+        let edited = edit(entry)
+        record[key] = edited
     }
 }
