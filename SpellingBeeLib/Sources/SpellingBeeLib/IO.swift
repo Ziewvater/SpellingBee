@@ -15,6 +15,10 @@ struct IO {
 
     /// The text of the word list source
     static func source(sourcePath: URL = IO.originalSourcePath) -> String? {
+        let updatedPath = updatedSourceDirectoryPath.appendingPathComponent(updatedSourceName)
+        let sourcePath = FileManager.default.fileExists(atPath: updatedPath.absoluteString)
+            ? updatedPath
+            : originalSourcePath
         guard let wordString = try? String(contentsOf: sourcePath, encoding: String.Encoding.utf8) else {
             return nil
         }
