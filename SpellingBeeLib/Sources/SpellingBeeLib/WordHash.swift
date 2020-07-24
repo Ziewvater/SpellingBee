@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum WordHashError: Error {
+    case WriteError(_ message: String)
+}
+
 /// The WordHash creates a quick reference for words, keyed by the letters that are
 /// members of the word.
 public struct WordHash {
@@ -45,7 +49,6 @@ public struct WordHash {
         modifyRecord(for: word) { entry -> [String] in
             return entry + [word]
         }
-
     }
     
     mutating func forget(word: String) {
@@ -60,12 +63,15 @@ public struct WordHash {
         let edited = edit(entry)
         record[key] = edited
     }
-}
 
-extension WordHash {
-    
-    public func sourceWords() -> [String]? {
+    func sourceWords() -> [String]? {
         return record.compactMap { $0.value }.joined().map { $0 }.sorted()
     }
 
+    public func save() throws {
+        guard let newSource = sourceWords() else {
+            throw WordHashError.WriteError("WordHash: Couldn't get list of source words")
+        }
+        return try IO.updateSource(with: newSource)
+    }
 }

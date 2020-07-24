@@ -13,17 +13,12 @@ public struct WordList {
     var hashed: Set<String>
     
     public init?() {
-        do {
-            // I should probably change this to be relative to the repository, huh
-            let wordString = try String(contentsOfFile: "/Users/JeremyYL/Developer/SpellingBee/Sources/SpellingBee/words.txt", encoding: String.Encoding.utf8)
-            let splitWords = wordString.split(whereSeparator: \.isNewline)
-            self.words = splitWords.map { String($0).lowercased() }
-            hashed = Set(words)
-
-        } catch {
-            print("Error creating word list: \(error)")
+        guard let wordString = IO.source() else {
             return nil
         }
+        let splitWords = wordString.split(whereSeparator: \.isNewline)
+        self.words = splitWords.map { String($0).lowercased() }
+        hashed = Set(words)
     }
     
     public func isWord(_ word: String) -> Bool {
