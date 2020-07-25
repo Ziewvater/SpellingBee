@@ -14,9 +14,9 @@ struct IO {
     static let updatedSourceName = "updated.txt"
 
     /// The text of the word list source
-    static func source(sourcePath: URL = IO.originalSourcePath) -> String? {
+    static func source() -> String? {
         let updatedPath = updatedSourceDirectoryPath.appendingPathComponent(updatedSourceName)
-        let sourcePath = FileManager.default.fileExists(atPath: updatedPath.absoluteString)
+        let sourcePath = FileManager.default.fileExists(atPath: updatedPath.path)
             ? updatedPath
             : originalSourcePath
         guard let wordString = try? String(contentsOf: sourcePath, encoding: String.Encoding.utf8) else {
@@ -26,7 +26,7 @@ struct IO {
     }
     
     static func updateSource(with source: String, to destinationURL: URL = IO.updatedSourceDirectoryPath, named fileName: String = updatedSourceName) throws {
-        if !FileManager.default.fileExists(atPath: destinationURL.absoluteString) {
+        if !FileManager.default.fileExists(atPath: destinationURL.path) {
             do {
                 try FileManager.default.createDirectory(at: destinationURL, withIntermediateDirectories: true)
             } catch {
